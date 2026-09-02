@@ -7,10 +7,10 @@ Este repositorio contiene la resolución del Trabajo Práctico 1. El proyecto im
 
 **Contenido del Proyecto**
 * **Ejercicios 1, 2 y 3:** Código fuente del sistema ubicado en `src/utn/eventos`. Incluye la aplicación de relaciones de Agregación (Sala) y Composición (Actividades e Inscripciones), así como Herencia y Polimorfismo mediante clases abstractas.
-* **Ejercicio 4:** Imagen `diagrama.png` (o el nombre que le hayas puesto) que representa el mapa de memoria de ejecución (Stack y Heap) del método main.
+* **Ejercicio 4:** Imagen `mapa_memoria.png`que representa el mapa de memoria de ejecución (Stack y Heap) del método main.
 
 **Instrucciones de Ejecución**
 1. Clonar este repositorio localmente.
-2. Abrir el proyecto utilizando IntelliJ IDEA (o cualquier IDE compatible con Java).
+2. Abrir el proyecto utilizando IntelliJ IDEA.
 3. Navegar hasta `src/utn/eventos/App.java`.
 4. Ejecutar el método `main` de la clase `App`. La consola mostrará la creación de estudiantes, el cálculo de costos con impuestos, y la asignación polimórfica de las actividades.
