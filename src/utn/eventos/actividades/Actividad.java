@@ -1,9 +1,14 @@
-package utn.eventos;
+package utn.eventos.actividades;
 
+import utn.eventos.Estudiante;
+import utn.eventos.Inscripcion;
+import utn.eventos.excepciones.CupoExcedidoException;
+
+import java.io.Serializable;
 import java.util.List;
 import java.util.ArrayList;
 
-public abstract class Actividad {
+public abstract class Actividad implements Serializable {
     private int id;
     private String titulo;
     private int cupoMaximo;
@@ -17,36 +22,36 @@ public abstract class Actividad {
         this.id = id;
         this.titulo = titulo;
         this.cupoMaximo = cupoMaximo;
-
         this.inscripciones = new ArrayList<>();
     }
-    // Método para inscribir a los estudiantes
-    public Inscripcion inscribir(Estudiante estudiante) {
-        // Controlamos que no se supere el cupo máximo
-        if (this.inscripciones.size() < this.cupoMaximo) {
-            // Creamos el objeto Inscripcion que relaciona a la actividad con el alumno
-            Inscripcion nuevaInscripcion = new Inscripcion(estudiante);
-            // Agregamos la inscripción a nuestra lista
-            this.inscripciones.add(nuevaInscripcion);
 
-            return nuevaInscripcion;
-        } else {
-            System.out.print("No se pudo inscribir a " + estudiante.getNombre() + ". Cupo lleno en la actividad: " + this.titulo);
-            return null;
+    // Método para inscribir a los estudiantes modificado con throw
+    public Inscripcion inscribir(Estudiante estudiante) throws CupoExcedidoException {
+        // Invertimos la lógica: primero controlamos el error y lanzamos la excepción
+        if (this.inscripciones.size() >= this.cupoMaximo) {
+            throw new CupoExcedidoException("No se pudo inscribir a " + estudiante.getNombre() + ". Cupo lleno en la actividad: " + this.titulo);
         }
+
+        // Si no hay error, el código continúa normalmente
+        Inscripcion nuevaInscripcion = new Inscripcion(estudiante);
+        this.inscripciones.add(nuevaInscripcion);
+
+        return nuevaInscripcion;
     }
 
     // Método para mostrar quiénes están inscriptos
     public void mostrarInscripciones() {
-        System.out.println("--- Inscriptos en " + this.titulo + "---");
+        System.out.println("\n--- Inscriptos en " + this.titulo + " ---");
         // Usamos un bucle for each para recorrer la lista
         for (Inscripcion inscripcion : this.inscripciones) {
-            System.out.print("- Alumno: " + inscripcion.getEstudiante().getNombre() + " (Fecha: " + inscripcion.getFecha() + ")");
+            System.out.println("- Alumno: " + inscripcion.getEstudiante().getNombre() + " (Fecha: " + inscripcion.getFecha() + ")");
         }
     }
+
     public String getTitulo() {
         return titulo;
     }
+
     // Método FINAL: no puede ser sobrescrito (redefinido) por las subclases
     public final void mostrarIdentificacion() {
         System.out.println("ID: " + this.id + " | Título: " + this.titulo + " | Tipo: " + this.getTipo());
@@ -55,5 +60,8 @@ public abstract class Actividad {
     // Métodos ABSTRACTOS: declaran un comportamiento pero delegan la lógica a las clases hijas
     public abstract double calcularCostoMateriales();
     public abstract String getTipo();
-}
 
+    public List<Inscripcion> getInscripciones() {
+        return this.inscripciones;
+    }
+}

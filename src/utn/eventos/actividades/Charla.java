@@ -1,4 +1,4 @@
-package utn.eventos;
+package utn.eventos.actividades;
 
 public class Charla extends Actividad {
     private String disertante;
